@@ -1,0 +1,8 @@
+C:\GitHub\Moire\obj\Debug\Moire.csproj.AssemblyReference.cache
+C:\GitHub\Moire\obj\Debug\Moire.csproj.SuggestedBindingRedirects.cache
+C:\GitHub\Moire\obj\Debug\Moire.csproj.CoreCompileInputs.cache
+C:\GitHub\Moire\bin\Debug\Moire.exe.config
+C:\GitHub\Moire\bin\Debug\Moire.exe
+C:\GitHub\Moire\bin\Debug\Moire.pdb
+C:\GitHub\Moire\obj\Debug\Moire.exe
+C:\GitHub\Moire\obj\Debug\Moire.pdb

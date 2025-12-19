@@ -34,13 +34,14 @@ namespace Moire
 				Antialias = false   // Turning this on can make all kinds of other moire effects I need to understand
 			};
 
+			mSettings.BlockNumPixels = .25; // size / m.BlockNumPixels needs to be constant
+			mSettings.BlockNumPixels = 8;
+			mSettings.BlockNumPixels = 10;      // 2000
+			mSettings.BlockNumPixels = 15;      // 2500
+			//mSettings.BlockNumPixels = 20;
+			//mSettings.BlockNumPixels = 100;
+
 			Moire m = new Moire();
-			m.BlockNumPixels = .25; // size / m.BlockNumPixels needs to be constant
-			m.BlockNumPixels = 8;
-			m.BlockNumPixels = 10;		// 2000
-			m.BlockNumPixels = 15;		// 2500
-			//m.BlockNumPixels = 20;
-			//m.BlockNumPixels = 100;
 			m.GenImage( mSettings );
 			return;
 		}

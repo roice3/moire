@@ -15,22 +15,26 @@
 
 	public class Quantizer
 	{
+		public bool MixShapes = false;
+
 		public EQuantizeShape QuantizeShape { get; set; } = EQuantizeShape.Gaussian;
 
 		private double m_quantaSize { get ; set; }
 
 		public Vector3D Quantize( double quantaSize, Vector3D v )
 		{
-			/* // This code will show all quantizations in separate quadrants.
-			if( v.Y < 0 && v.X < 0 )
-				QuantizeSphape = EQuantizeShape.Eisenstein_Hex;
-			else if( v.Y < 0 && v.X > 0 )
-				QuantizeSphape = EQuantizeShape.Eisenstein_Tri;
-			else if( v.Y > 0 && v.X < 0 )
-				QuantizeSphape = EQuantizeShape.Gaussian;
-			else
-				QuantizeSphape = EQuantizeShape.Voronoi;
-			*/
+			// This code will show all quantizations in separate quadrants.
+			if( MixShapes )
+			{ 
+				if( v.Y < 0 && v.X < 0 )
+					QuantizeShape = EQuantizeShape.Eisenstein_Hex;
+				else if( v.Y < 0 && v.X > 0 )
+					QuantizeShape = EQuantizeShape.Eisenstein_Tri;
+				else if( v.Y > 0 && v.X < 0 )
+					QuantizeShape = EQuantizeShape.Gaussian;
+				else
+					QuantizeShape = EQuantizeShape.Voronoi;
+			}
 
 			m_quantaSize = quantaSize;
 

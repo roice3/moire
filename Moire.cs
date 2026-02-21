@@ -24,6 +24,7 @@
 		public int Width { get; set; }
 		public int Height { get; set; }
 		public double Bounds { get; set; }          // y bounds (x will be scaled accordingly).
+		public double ImageRatio { get; set; } = 1.0;
 		public string FileName { get; set; }
 		public bool Antialias { get; set; }
 		public bool EMetric { get; set; }
@@ -70,17 +71,19 @@
 
 	internal class Moire
 	{
-		private Quantizer m_quantizer = new Quantizer();
+		public Quantizer m_quantizer = new Quantizer();
 		private readonly object m_lock = new object();
 
 		public void GenImage( Settings settings )
 		{
-			double numPoints = (double)settings.Width / settings.BlockNumPixels * settings.Height / settings.BlockNumPixels;
+			double imageRatio = settings.ImageRatio;
+			double numPoints = (double)settings.Width * imageRatio / settings.BlockNumPixels * settings.Height / settings.BlockNumPixels;
 			numPoints *= 3; // artificial, I'm just going a bit by eye with this.
-			m_quantizer.SetupGrid( (int)numPoints, settings.Bounds );
+			m_quantizer.SetupGrid( (int)numPoints, settings.Bounds * imageRatio );
 
-			int width = settings.Width;
+			int width = (int)(settings.Width * imageRatio);
 			int height = settings.Height;
+
 			Bitmap image = new Bitmap( width, height );
 
 			// Cycle through all the pixels and calculate the color.
@@ -95,7 +98,7 @@
 
 				for( int j = 0; j < height; j++ )
 				{
-					double x = -bounds + i * xoff;
+					double x = -bounds*imageRatio + i * xoff;
 					double y = -bounds + j * yoff;
 
 					// Doesn't seem to make any real difference here.

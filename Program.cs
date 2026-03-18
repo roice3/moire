@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Moire
+﻿namespace Moire
 {
+	using R3.Core;
+
 	internal class Program
 	{
 		static void Main( string[] args )
@@ -48,24 +44,31 @@ namespace Moire
 			Moire m = new Moire();
 
 			mSettings.ImageRatio = 16.0 / 9;
+			mSettings.ImageRatio = 1.0;
 
-			mSettings.FileName = "moire_square.png";
+			mSettings.EMetric = EMetric.Euclidean;
+			string suffix = "";
+
+			//mSettings.EMetric = EMetric.Lorentzian;
+			//string suffix = "_lorentz";
+
+			mSettings.FileName = "moire_square" + suffix + ".png";
 			m.m_quantizer.QuantizeShape = R3.Geometry.EQuantizeShape.Gaussian;
 			m.GenImage( mSettings );
 
-			mSettings.FileName = "moire_hex.png";
+			mSettings.FileName = "moire_hex" + suffix + ".png";
 			m.m_quantizer.QuantizeShape = R3.Geometry.EQuantizeShape.Eisenstein_Hex;
 			m.GenImage( mSettings );
 
-			mSettings.FileName = "moire_tri.png";
+			mSettings.FileName = "moire_tri" + suffix + ".png";
 			m.m_quantizer.QuantizeShape = R3.Geometry.EQuantizeShape.Eisenstein_Tri;
 			m.GenImage( mSettings );
 
-			mSettings.FileName = "moire_voronoi.png";
+			mSettings.FileName = "moire_voronoi" + suffix + ".png";
 			m.m_quantizer.QuantizeShape = R3.Geometry.EQuantizeShape.Voronoi;
 			m.GenImage( mSettings );
 
-			mSettings.FileName = "moire_mixed.png";
+			mSettings.FileName = "moire_mixed_" + suffix + ".png";
 			m.m_quantizer.QuantizeShape = R3.Geometry.EQuantizeShape.Gaussian;
 			m.m_quantizer.MixShapes = true;
 			m.GenImage( mSettings );

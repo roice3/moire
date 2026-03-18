@@ -2,14 +2,13 @@
 {
 	using R3.Core;
 	using R3.Geometry;
-	using R3.Math;
 	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Drawing.Imaging;
 	using System.Threading.Tasks;
 	using Math = System.Math;
 
-	internal enum EMetric
+	public enum EMetric
 	{
 		Euclidean,
 		Spherical,
@@ -19,7 +18,7 @@
 
 	public class Settings
 	{
-		public Settings() { }
+		public Settings() {}
 
 		public int Width { get; set; }
 		public int Height { get; set; }
@@ -27,7 +26,7 @@
 		public double ImageRatio { get; set; } = 1.0;
 		public string FileName { get; set; }
 		public bool Antialias { get; set; }
-		public bool EMetric { get; set; }
+		public EMetric EMetric { get; set; } = EMetric.Euclidean;
 
 		/// <summary>
 		/// "block size", e.g. how may screen pixels are our virtual "pixels"?
@@ -150,18 +149,26 @@
 			double quantaSize = settings.ScreenPixelSize * settings.BlockNumPixels;
 			Vector3D quantized = m_quantizer.Quantize( quantaSize, v );
 
-			//double mag = quantized.Abs();
-			double ds2 = quantized.X * quantized.X + quantized.Y * quantized.Y;    // euclidean	
-			//double ds2 = quantized.X * quantized.X - quantized.Y * quantized.Y;        // lorentz metric
-			
-			//double dist = Spherical2D.SDist( new Vector3D(), quantized );
-			//ds2 = dist * dist;
-			//ds2 *= 1000.0;	// scaling.
-
-			//double dist = H3Models.Ball.HDist( new Vector3D(), quantized/20 );
-			//ds2 = dist * dist;
-			//ds2 *= 100;
-
+			double dist = 1, ds2 = 1;
+			switch( settings.EMetric)
+			{
+				case EMetric.Euclidean:
+					ds2 = quantized.X * quantized.X + quantized.Y * quantized.Y;
+					break;
+				case EMetric.Spherical:
+					dist = Spherical2D.SDist( new Vector3D(), quantized );
+					ds2 = dist * dist;
+					ds2 *= 1000.0;  // scaling.
+					break;
+				case EMetric.Hyperbolic:
+					dist = H3Models.Ball.HDist( new Vector3D(), quantized/20 );
+					ds2 = dist * dist;
+					ds2 *= 100;	// scaling
+					break;
+				case EMetric.Lorentzian:
+					ds2 = quantized.X * quantized.X - quantized.Y * quantized.Y;
+					break;
+			}
 
 			double scaled = ds2;	// use with lorentz??
 			//double scaled = mag * mag; // Why is squared so special? maybe because it is the square of the metric??

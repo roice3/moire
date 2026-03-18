@@ -50,6 +50,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="R3.Core\Drawing\ColorUtil.cs" />
+    <Compile Include="R3.Core\Drawing\SimpleImageScaler.cs" />
     <Compile Include="R3.Core\Geometry\Euclidean2D.cs" />
     <Compile Include="R3.Core\Geometry\Euclidean3D.cs" />
     <Compile Include="R3.Core\Geometry\Geometry2D.cs" />

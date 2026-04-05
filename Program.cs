@@ -1,6 +1,6 @@
 ﻿namespace Moire
 {
-	using R3.Core;
+	using System;
 
 	internal class Program
 	{
@@ -40,6 +40,21 @@
 			//mSettings.BlockNumPixels = 15;      // 3000
 			//mSettings.BlockNumPixels = 20;		// 4000 bounds 25, 22500 bounds 100
 			//mSettings.BlockNumPixels = 100;
+
+			bool makePrimesPic = false;
+			if (makePrimesPic)
+			{
+                int maxPossibleSize = (int)(Math.Pow(2, 16) - 1);   // For a 1-bit image.
+                size = maxPossibleSize;
+                size = 49152;   // max for 4-bit image. Cool Claude session about this.
+				mSettings.Width = mSettings.Height = size;
+
+                Primes p = new Primes();
+				mSettings.FileName = "primes.png";
+				mSettings.BlockNumPixels = 1;
+				p.GenImage(mSettings);
+				return;
+			}
 
 			Moire m = new Moire();
 
